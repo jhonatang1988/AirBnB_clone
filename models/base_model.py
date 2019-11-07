@@ -9,12 +9,22 @@ class BaseModel():
     ''' BaseModel - attributes and methods'''
     __nb_objects = 0
 
-    def __init__(self, id=None):
+    def __init__(self, *args, **kwargs):
         '''__init__ - attributes'''
-        if id is not None:
-            self.id = id
-            self.created_at = created_at
-            self.updated_at = datetime.datetime.utcnow()
+        if len(kwargs) != 0:
+            for key, value in kwargs.items():
+                if key == 'created_at':
+                    self.created_at = datetime.strptime(value,
+                                                        '%Y-%m-%dT%H:%M:%S.%f')
+                if key == 'id':
+                    self.id = value
+                if key == 'updated_at':
+                    self.updated_at = datetime.strptime(value,
+                                                        '%Y-%m-%dT%H:%M:%S.%f')
+                if key == 'my_number':
+                    self.my_number = value
+                if key == 'name':
+                    self.name = value
         else:
             BaseModel.__nb_objects += 1
             self.id = str(uuid.uuid4())
@@ -23,8 +33,8 @@ class BaseModel():
 
     def __str__(self):
         '''__str__ - print instance'''
-        return("[{}] ({}) <{}>".format(self.__class__.__name__, self.id,
-                                       self.__dict__))
+        return("[{}] ({}) {}".format(self.__class__.__name__, self.id,
+                                     self.__dict__))
 
     def save(self):
         '''save - save changes of instance'''
