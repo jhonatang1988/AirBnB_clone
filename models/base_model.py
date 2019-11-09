@@ -3,6 +3,7 @@
 
 import uuid
 from datetime import datetime, date, time
+import models
 
 
 class BaseModel():
@@ -28,8 +29,9 @@ class BaseModel():
         else:
             BaseModel.__nb_objects += 1
             self.id = str(uuid.uuid4())
-            self.created_at = datetime.utcnow()
-            self.updated_at = datetime.utcnow()
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
+            models.storage.new(self)
 
     def __str__(self):
         '''__str__ - print instance'''
@@ -38,12 +40,13 @@ class BaseModel():
 
     def save(self):
         '''save - save changes of instance'''
-        self.updated_at = datetime.utcnow()
+        self.updated_at = datetime.now()
+        models.storage.save()
 
     def to_dict(self):
         '''to_dict - dictionary of the instance'''
         new_dict = self.__dict__
         new_dict['__class__'] = self.__class__.__name__
-        new_dict['created_at'] = self.__dict__['created_at'].isoformat(sep='T')
-        new_dict['updated_at'] = self.__dict__['updated_at'].isoformat(sep='T')
+        new_dict['created_at'] = self.__dict__['created_at'].isoformat()
+        new_dict['updated_at'] = self.__dict__['updated_at'].isoformat()
         return(new_dict)
