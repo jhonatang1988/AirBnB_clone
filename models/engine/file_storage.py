@@ -1,7 +1,10 @@
 #!/usr/bin/python3
+'''FileStorage - file storage'''
+
 import json
 from models.base_model import BaseModel
 import os.path
+
 
 class FileStorage(BaseModel):
     '''FileStorage - file storage'''
