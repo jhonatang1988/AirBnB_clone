@@ -45,7 +45,7 @@ class BaseModel():
 
     def to_dict(self):
         '''to_dict - dictionary of the instance'''
-        new_dict = self.__dict__
+        new_dict = self.__dict__.copy()
         new_dict['__class__'] = self.__class__.__name__
         new_dict['created_at'] = self.__dict__['created_at'].isoformat()
         new_dict['updated_at'] = self.__dict__['updated_at'].isoformat()
