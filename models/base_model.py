@@ -14,18 +14,22 @@ class BaseModel():
         '''__init__ - attributes'''
         if len(kwargs) != 0:
             for key, value in kwargs.items():
-                if key == 'created_at':
-                    self.created_at = datetime.strptime(value,
+                if key != '__class__':
+                    if key == 'created_at':
+                        self.created_at = datetime.strptime(value,
                                                         '%Y-%m-%dT%H:%M:%S.%f')
-                if key == 'id':
-                    self.id = value
-                if key == 'updated_at':
-                    self.updated_at = datetime.strptime(value,
+                    elif key == 'id':
+                        self.id = value
+                    elif key == 'updated_at':
+                        self.updated_at = datetime.strptime(value,
                                                         '%Y-%m-%dT%H:%M:%S.%f')
-                if key == 'my_number':
-                    self.my_number = value
-                if key == 'name':
-                    self.name = value
+                    elif key == 'my_number':
+                        self.my_number = value
+                    elif key == 'name':
+                        self.name = value
+                    else:
+                        setattr(self, key, value)
+            models.storage.new(self)
         else:
             BaseModel.__nb_objects += 1
             self.id = str(uuid.uuid4())

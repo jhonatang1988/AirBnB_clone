@@ -30,6 +30,7 @@ class FileStorage(BaseModel):
         if os.path.isfile(self.__file_path):
             with open(self.__file_path, encoding="utf-8", mode='r') as f:
                 json_string = f.read()
-                dict1 = json.loads(json_string)
-                for key, value in dict1.items():
-                    self.__objects[key] = BaseModel(**value)
+                if json_string:
+                    dict1 = json.loads(json_string)
+                    for key, value in dict1.items():
+                        self.__objects[key] = BaseModel(**value)
