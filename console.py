@@ -56,8 +56,9 @@ class HBNBCommand(cmd.Cmd):
                         if a_string:
                             a_dict = json.loads(a_string)
                             if a_list[0] + '.' + a_list[1] in a_dict:
-                                print(eval(a_list[0])(**(a_dict[a_list[0] + '.' +
-                                                      a_list[1]])))
+                                print(eval(a_list[0])
+                                      (**(a_dict[a_list[0] +
+                                                 '.' + a_list[1]])))
                             else:
                                 print("** no instance found **")
                         else:
@@ -112,10 +113,12 @@ class HBNBCommand(cmd.Cmd):
                         for key, value in a_dict.items():
                             if flag2 == 0:
                                 if a_list[0] in key:
-                                    instances.append(eval_class.__str__(eval_class(**(value))))
+                                    instances.append(eval_class.__str__
+                                                     (eval_class(**(value))))
                             if flag2 == 1:
                                 eval_class2 = eval(value['__class__'])
-                                instances.append(eval_class2.__str__(eval_class2(**(value))))
+                                instances.append(eval_class2.__str__
+                                                 (eval_class2(**(value))))
                         print(instances)
 
     def do_update(self, inp):
@@ -132,15 +135,16 @@ class HBNBCommand(cmd.Cmd):
             elif len(a_list) == 3:
                 print("** value missing **")
             elif a_list[0] in self.model_list and len(a_list) >= 4:
-                a_list[3] = a_list[3].replace("'","")
-                a_list[3] = a_list[3].replace("\"","")
+                a_list[3] = a_list[3].replace("'", "")
+                a_list[3] = a_list[3].replace("\"", "")
                 if os.path.isfile(self.__file_path):
                     with open(self.__file_path,
-                             encoding='utf-8', mode='r') as f:
+                              encoding='utf-8', mode='r') as f:
                         a_string = f.read()
                         a_dict = json.loads(a_string)
                         if a_list[0] + '.' + a_list[1] in a_dict:
-                            a_dict[a_list[0] + '.' + a_list[1]][a_list[2]] = a_list[3]
+                            a_dict[a_list[0] + '.' +
+                                   a_list[1]][a_list[2]] = a_list[3]
                             dict1 = a_dict[a_list[0] + '.' + a_list[1]]
                             new_instance = eval(a_list[0])(**dict1)
                             new_instance.save()

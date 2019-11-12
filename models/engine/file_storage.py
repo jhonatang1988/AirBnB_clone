@@ -17,6 +17,7 @@ class FileStorage(BaseModel):
     def __init__(self):
         self.__file_path = 'file.json'
         self.__objects = {}
+
     def all(self):
         return (self.__objects)
 

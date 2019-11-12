@@ -13,20 +13,23 @@ class BaseModel():
     def __init__(self, *args, **kwargs):
         '''__init__ - attributes'''
         if len(kwargs) != 0:
+            at_integers = ['my_integers', 'number_rooms', 'number_bathrooms',
+                           'max_guest', 'price_by_night', 'my_number']
+            at_floats = ['latitude', 'longitude']
+            at_datetime = ['created_at', 'updated_at']
             for key, value in kwargs.items():
                 if key != '__class__':
-                    if key == 'created_at':
-                        self.created_at = datetime.strptime(value,
-                                                        '%Y-%m-%dT%H:%M:%S.%f')
-                    elif key == 'id':
-                        self.id = value
-                    elif key == 'updated_at':
-                        self.updated_at = datetime.strptime(value,
-                                                        '%Y-%m-%dT%H:%M:%S.%f')
-                    elif key == 'my_number':
-                        self.my_number = value
-                    elif key == 'name':
-                        self.name = value
+                    if key in at_integers:
+                        setattr(self, key, int(value))
+                    elif key in at_floats:
+                        setattr(self, key, float(value))
+                    elif key in at_datetime:
+                        if key == 'created_at':
+                            self.created_at = datetime.strptime(
+                                value, '%Y-%m-%dT%H:%M:%S.%f')
+                        if key == 'updated_at':
+                            self.updated_at = datetime.strptime(
+                                value, '%Y-%m-%dT%H:%M:%S.%f')
                     else:
                         setattr(self, key, value)
             models.storage.new(self)
