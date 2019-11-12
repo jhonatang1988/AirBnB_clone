@@ -16,6 +16,7 @@ import models
 import os.path
 import json
 import shlex
+import re
 
 
 class HBNBCommand(cmd.Cmd):
@@ -175,29 +176,24 @@ class HBNBCommand(cmd.Cmd):
                             print("** no instance found **")
 
     def default(self, inp):
-        '''default - process other type of input'''
-        tokens = inp.split('.')
-        if tokens is not None and len(tokens) > 1:
-            method = tokens[1].split('(')
-            if method is not None:
-                arguments = method[1].split(',')
-                if arguments is not None:
-                    for i in range(len(arguments)):
-                        arguments[i] = arguments[i].replace("'", "")
-                        arguments[i] = arguments[i].replace(")", "")
-                        final_list = [tokens[0]] + arguments
-                        str_final = ' '.join(str(e) for e in final_list)
-                        if method[0] == 'all' and len(arguments) == 1:
-                            return(self.do_all(str_final))
-                        elif method[0] == 'show' and len(arguments) == 1:
-                            return(self.do_show(str_final))
-                        elif method[0] == 'destroy' and len(arguments) == 1:
-                            return(self.do_destroy(str_final))
-                        elif method[0] == 'update' and len(arguments) == 3:
-                            return(self.do_update(str_final))
-                        else:
-                            return(cmd.Cmd.default(self, inp))
-        return(cmd.Cmd.default(self, inp))
+        """Type method default"""
+        m_dict = {
+           "all": self.do_all,
+            "show": self.do_show,
+            "destroy": self.do_destroy,
+            "update": self.do_update
+        }
+        m = re.search(r"\.", inp)
+        if m is not None:
+            marg = [inp[:m.span()[0]], inp[m.span()[1]:]]
+            m = re.search(r"\((.*?)\)", marg[1])
+            if m is not None:
+                cmd = [marg[1][:m.span()[0]], m.group()[1:-1]]
+                if cmd[0] in m_dict.keys():
+                    get = "{} {}".format(marg[0], cmd[1])
+                    return m_dict[cmd[0]](get)
+        print("*** Unknown syntax: {}".format(inp))
+        return False
 
 if __name__ == '__main__':
     '''main'''
