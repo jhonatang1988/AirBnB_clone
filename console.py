@@ -28,7 +28,13 @@ class HBNBCommand(cmd.Cmd):
         '''do_quit - Quit command to exit the program'''
         return True
 
-    do_EOF = do_quit
+    def emptyline(self):
+        '''emptyline - do nothing'''
+        pass
+
+    def do_EOF(self, inp):
+        '''do_EOF - Quit command to exit the program'''
+        return True
 
     def do_create(self, inp):
         '''do_create - create a new instance of a model'''
