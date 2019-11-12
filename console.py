@@ -107,6 +107,8 @@ class HBNBCommand(cmd.Cmd):
                     with open(self.__file_path,
                               encoding='utf-8', mode='w') as f:
                         f.write(json.dumps(a_dict))
+                else:
+                    print("** no instance found **")
 
     def do_all(self, inp):
         '''do_all - show all instances of a class or all'''
