@@ -15,6 +15,7 @@ from models.review import Review
 import models
 import os.path
 import json
+import shlex
 
 
 class HBNBCommand(cmd.Cmd):
@@ -140,7 +141,7 @@ class HBNBCommand(cmd.Cmd):
         if len(inp) == 0:
             print("** class name missing **")
         else:
-            a_list = inp.split()
+            a_list = shlex.split(inp)
             if a_list[0] not in self.model_list:
                 print("** class doesn't exist **")
             elif len(a_list) == 1:
@@ -172,10 +173,8 @@ class HBNBCommand(cmd.Cmd):
         method = tokens[1].split('(')
         arguments = method[1].split(',')
         for i in range(len(arguments)):
-            arguments[i] = arguments[i].replace("\"", "")
             arguments[i] = arguments[i].replace("'", "")
             arguments[i] = arguments[i].replace(")", "")
-            arguments[i] = arguments[i].replace(" ", "")
         final_list = [tokens[0]] + arguments
         str_final = ' '.join(str(e) for e in final_list)
         if method[0] == 'all' and len(arguments) == 0:
