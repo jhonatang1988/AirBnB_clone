@@ -4,6 +4,7 @@ HBNBCommand - console for the airbnb clone
 '''
 
 import cmd
+import sys
 from models.base_model import BaseModel
 from models.user import User
 from models.state import State
@@ -156,4 +157,6 @@ class HBNBCommand(cmd.Cmd):
                             new_instance.save()
                         else:
                             print("** no instance found **")
-HBNBCommand().cmdloop()
+if __name__ == '__main__':
+    '''main'''
+    HBNBCommand().cmdloop()
