@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 '''HBNBCommand - console for the airbnb clone'''
+
 import cmd
 from models.base_model import BaseModel
 from models.user import User
@@ -14,6 +15,7 @@ import json
 
 
 class HBNBCommand(cmd.Cmd):
+    '''HBNBCommand - console for the airbnb clone'''
     prompt = '(hbnb)'
     __file_path = 'file.json'
     model_list = ['BaseModel', 'User', 'State',
@@ -26,9 +28,9 @@ class HBNBCommand(cmd.Cmd):
     do_EOF = do_quit
 
     def do_create(self, inp):
+        '''create a new instance of a model'''
         model_list = ['BaseModel', 'User', 'State',
                       'City', 'Amenity', 'Place', 'Review']
-        '''create a new instance of a model'''
         if len(inp) == 0:
             print("** class name missing **")
         elif inp in self.model_list:
@@ -89,6 +91,7 @@ class HBNBCommand(cmd.Cmd):
                         f.write(json.dumps(a_dict))
 
     def do_all(self, inp):
+        '''show all instances of a class or all'''
         flag = 0
         flag2 = 0
         if len(inp) == 0:
@@ -122,6 +125,7 @@ class HBNBCommand(cmd.Cmd):
                         print(instances)
 
     def do_update(self, inp):
+        '''update an instance'''
         if len(inp) == 0:
             print("** class name missing **")
         else:
