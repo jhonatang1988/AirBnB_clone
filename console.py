@@ -20,7 +20,7 @@ import shlex
 
 class HBNBCommand(cmd.Cmd):
     '''HBNBCommand - console for the airbnb clone'''
-    prompt = '(hbnb)'
+    prompt = '(hbnb) '
     __file_path = 'file.json'
     model_list = ['BaseModel', 'User', 'State',
                   'City', 'Amenity', 'Place', 'Review']
@@ -139,6 +139,9 @@ class HBNBCommand(cmd.Cmd):
                                 instances.append(eval_class2.__str__
                                                  (eval_class2(**(value))))
                         print(instances)
+            else:
+                list_vacia = []
+                print(list_vacia)
 
     def do_update(self, inp):
         '''do_update - update an instance'''
@@ -181,7 +184,7 @@ class HBNBCommand(cmd.Cmd):
             arguments[i] = arguments[i].replace(")", "")
         final_list = [tokens[0]] + arguments
         str_final = ' '.join(str(e) for e in final_list)
-        if method[0] == 'all' and len(arguments) == 0:
+        if method[0] == 'all' and len(arguments) == 1:
             return(self.do_all(str_final))
         elif method[0] == 'show' and len(arguments) == 1:
             return(self.do_show(str_final))
