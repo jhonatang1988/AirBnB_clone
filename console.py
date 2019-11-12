@@ -177,6 +177,8 @@ class HBNBCommand(cmd.Cmd):
                             new_instance.save()
                         else:
                             print("** no instance found **")
+                else:
+                    print("** no instance found **")
 
     def default(self, inp):
         '''default - process other type of input'''
