@@ -69,6 +69,8 @@ class HBNBCommand(cmd.Cmd):
                         a_string = f.read()
                         if a_string:
                             a_dict = json.loads(a_string)
+                            a_list[1] = a_list[1].replace("'", "")
+                            a_list[1] = a_list[1].replace("\"", "")
                             if a_list[0] + '.' + a_list[1] in a_dict:
                                 print(eval(a_list[0])
                                       (**(a_dict[a_list[0] +
@@ -94,6 +96,8 @@ class HBNBCommand(cmd.Cmd):
                               encoding='utf-8', mode='r') as f:
                         a_string = f.read()
                         a_dict = json.loads(a_string)
+                        a_list[1] = a_list[1].replace("'", "")
+                        a_list[1] = a_list[1].replace("\"", "")
                         if a_list[0] + '.' + a_list[1] in a_dict:
                             del a_dict[a_list[0] + '.' + a_list[1]]
                         else:
