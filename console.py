@@ -173,6 +173,7 @@ class HBNBCommand(cmd.Cmd):
         arguments = method[1].split(',')
         for i in range(len(arguments)):
             arguments[i] = arguments[i].replace("\"", "")
+            arguments[i] = arguments[i].replace("'", "")
             arguments[i] = arguments[i].replace(")", "")
             arguments[i] = arguments[i].replace(" ", "")
         final_list = [tokens[0]] + arguments
