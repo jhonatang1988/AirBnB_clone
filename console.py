@@ -202,14 +202,32 @@ class HBNBCommand(cmd.Cmd):
                         arguments[i] = arguments[i].replace(")", "")
                         final_list = [tokens[0]] + arguments
                         str_final = ' '.join(str(e) for e in final_list)
+                        str_final = str_final.replace(")", "")
                         if method[0] == 'all' and len(arguments) == 1:
                             return(self.do_all(str_final))
                         elif method[0] == 'show' and len(arguments) == 1:
                             return(self.do_show(str_final))
                         elif method[0] == 'destroy' and len(arguments) == 1:
                             return(self.do_destroy(str_final))
-                        elif method[0] == 'update' and len(arguments) == 3:
-                            return(self.do_update(str_final))
+                        elif method[0] == 'update':
+                            if "{" in inp:
+                                update_list = [tokens[0]]
+                                str_bef_dict = inp.split(',', 1)[-1]
+                                str_bef_dict = str_bef_dict.replace(")", "")
+                                str_bef_dict = str_bef_dict.replace("'", "\"")
+                                dict1 = eval(str_bef_dict)
+                                if type(dict1) is dict:
+                                    for key, value in dict1.items():
+                                        update_list = [tokens[0]]
+                                        update_list.append(arguments[0])
+                                        update_list.append(key)
+                                        update_list.append(value)
+                                        str_update = ' '.join(
+                                            str(e) for e in update_list)
+                                        self.do_update(str_update)
+                                return
+                            else:
+                                return(self.do_update(str_final))
                         elif method[0] == 'count' and len(arguments) == 1:
                             return(self.do_count(str_final))
                         else:
