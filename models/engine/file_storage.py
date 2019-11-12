@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-'''FileStorage - file storage'''
+'''
+FileStorage - file storage
+'''
 
 import json
 from models.base_model import BaseModel
@@ -20,16 +22,16 @@ class FileStorage(BaseModel):
         self.__objects = {}
 
     def all(self):
-        '''return all objects'''
+        '''all - return all objects'''
         return (self.__objects)
 
     def new(self, obj):
-        '''create new object'''
+        '''new - create new object'''
         id1 = getattr(obj, 'id')
         self.__objects[obj.to_dict()['__class__'] + '.' + id1] = obj
 
     def save(self):
-        '''save changes in object or new'''
+        '''save - save changes in object or new'''
         dict2 = {}
         for key, value in self.__objects.items():
             dict2[key] = value.to_dict()
@@ -37,7 +39,7 @@ class FileStorage(BaseModel):
                 f.write(json.dumps(dict2))
 
     def reload(self):
-        '''reload objects or new'''
+        '''reload - reload objects or new'''
         import os.path
         if os.path.isfile(self.__file_path):
             with open(self.__file_path, encoding="utf-8", mode='r') as f:
