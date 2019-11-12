@@ -1,0 +1,153 @@
+#!/usr/bin/python3
+'''HBNBCommand - console for the airbnb clone'''
+import cmd
+from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
+import models
+import os.path
+import json
+
+
+class HBNBCommand(cmd.Cmd):
+    prompt = '(hbnb)'
+    __file_path = 'file.json'
+    model_list = ['BaseModel', 'User', 'State',
+                  'City', 'Amenity', 'Place', 'Review']
+
+    def do_quit(self, inp):
+        '''Quit command to exit the program'''
+        return True
+
+    do_EOF = do_quit
+
+    def do_create(self, inp):
+        model_list = ['BaseModel', 'User', 'State',
+                      'City', 'Amenity', 'Place', 'Review']
+        '''create a new instance of a model'''
+        if len(inp) == 0:
+            print("** class name missing **")
+        elif inp in self.model_list:
+            new = eval(inp)()
+            new.save()
+            print(new.id)
+        else:
+            print("** class doesn't exist **")
+
+    def do_show(self, inp):
+        '''show prints the string representation of an instance'''
+        if len(inp) == 0:
+            print("** class name missing **")
+        else:
+            a_list = inp.split()
+            if a_list[0] not in self.model_list:
+                print("** class doesn't exist **")
+            elif len(a_list) == 1:
+                print("** instance id missing **")
+            elif a_list[0] in self.model_list and len(a_list) == 2:
+                if os.path.isfile(self.__file_path):
+                    with open(self.__file_path,
+                              encoding='utf-8', mode='r') as f:
+                        a_string = f.read()
+                        if a_string:
+                            a_dict = json.loads(a_string)
+                            if a_list[0] + '.' + a_list[1] in a_dict:
+                                print(eval(a_list[0])
+                                      (**(a_dict[a_list[0] +
+                                                 '.' + a_list[1]])))
+                            else:
+                                print("** no instance found **")
+                        else:
+                            print("** no instance found **")
+
+    def do_destroy(self, inp):
+        '''destroy an instance'''
+        if len(inp) == 0:
+            print("** class name missing **")
+        else:
+            a_list = inp.split()
+            if a_list[0] not in self.model_list:
+                print("** class doesn't exist **")
+            elif len(a_list) == 1:
+                print("** instance id missing **")
+            elif a_list[0] in self.model_list and len(a_list) == 2:
+                if os.path.isfile(self.__file_path):
+                    with open(self.__file_path,
+                              encoding='utf-8', mode='r') as f:
+                        a_string = f.read()
+                        a_dict = json.loads(a_string)
+                        if a_list[0] + '.' + a_list[1] in a_dict:
+                            del a_dict[a_list[0] + '.' + a_list[1]]
+                        else:
+                            print("** no instance found **")
+                    with open(self.__file_path,
+                              encoding='utf-8', mode='w') as f:
+                        f.write(json.dumps(a_dict))
+
+    def do_all(self, inp):
+        flag = 0
+        flag2 = 0
+        if len(inp) == 0:
+            flag = 1
+            flag2 = 1
+        if len(inp) > 0:
+            a_list = inp.split()
+            if a_list[0] in self.model_list and len(a_list) == 1:
+                flag = 1
+            else:
+                print("** class doesn't exist **")
+                flag = 0
+        if flag == 1:
+            if flag2 == 0:
+                eval_class = eval(a_list[0])
+            instances = []
+            if os.path.isfile(self.__file_path):
+                with open(self.__file_path, encoding='utf-8', mode='r') as f:
+                    a_string = f.read()
+                    if a_string:
+                        a_dict = json.loads(a_string)
+                        for key, value in a_dict.items():
+                            if flag2 == 0:
+                                if a_list[0] in key:
+                                    instances.append(eval_class.__str__
+                                                     (eval_class(**(value))))
+                            if flag2 == 1:
+                                eval_class2 = eval(value['__class__'])
+                                instances.append(eval_class2.__str__
+                                                 (eval_class2(**(value))))
+                        print(instances)
+
+    def do_update(self, inp):
+        if len(inp) == 0:
+            print("** class name missing **")
+        else:
+            a_list = inp.split()
+            if a_list[0] not in self.model_list:
+                print("** class doesn't exist **")
+            elif len(a_list) == 1:
+                print("** instance id missing **")
+            elif len(a_list) == 2:
+                print("** attribute name missing **")
+            elif len(a_list) == 3:
+                print("** value missing **")
+            elif a_list[0] in self.model_list and len(a_list) >= 4:
+                a_list[3] = a_list[3].replace("'", "")
+                a_list[3] = a_list[3].replace("\"", "")
+                if os.path.isfile(self.__file_path):
+                    with open(self.__file_path,
+                              encoding='utf-8', mode='r') as f:
+                        a_string = f.read()
+                        a_dict = json.loads(a_string)
+                        if a_list[0] + '.' + a_list[1] in a_dict:
+                            a_dict[a_list[0] + '.' +
+                                   a_list[1]][a_list[2]] = a_list[3]
+                            dict1 = a_dict[a_list[0] + '.' + a_list[1]]
+                            new_instance = eval(a_list[0])(**dict1)
+                            new_instance.save()
+                        else:
+                            print("** no instance found **")
+HBNBCommand().cmdloop()
