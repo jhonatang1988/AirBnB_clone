@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-'''Base Class'''
+'''
+BaseModel - Base Class
+'''
 
 import uuid
 from datetime import datetime, date, time
@@ -8,6 +10,7 @@ import models
 
 class BaseModel():
     ''' BaseModel - attributes and methods'''
+
     __nb_objects = 0
 
     def __init__(self, *args, **kwargs):
