@@ -177,23 +177,27 @@ class HBNBCommand(cmd.Cmd):
     def default(self, inp):
         '''default - process other type of input'''
         tokens = inp.split('.')
-        method = tokens[1].split('(')
-        arguments = method[1].split(',')
-        for i in range(len(arguments)):
-            arguments[i] = arguments[i].replace("'", "")
-            arguments[i] = arguments[i].replace(")", "")
-        final_list = [tokens[0]] + arguments
-        str_final = ' '.join(str(e) for e in final_list)
-        if method[0] == 'all' and len(arguments) == 1:
-            return(self.do_all(str_final))
-        elif method[0] == 'show' and len(arguments) == 1:
-            return(self.do_show(str_final))
-        elif method[0] == 'destroy' and len(arguments) == 1:
-            return(self.do_destroy(str_final))
-        elif method[0] == 'update' and len(arguments) == 3:
-            return(self.do_update(str_final))
-        else:
-            return(cmd.Cmd.default(self, inp))
+        if tokens is not None and len(tokens) > 1:
+            method = tokens[1].split('(')
+            if method is not None:
+                arguments = method[1].split(',')
+                if arguments is not None:
+                    for i in range(len(arguments)):
+                        arguments[i] = arguments[i].replace("'", "")
+                        arguments[i] = arguments[i].replace(")", "")
+                        final_list = [tokens[0]] + arguments
+                        str_final = ' '.join(str(e) for e in final_list)
+                        if method[0] == 'all' and len(arguments) == 1:
+                            return(self.do_all(str_final))
+                        elif method[0] == 'show' and len(arguments) == 1:
+                            return(self.do_show(str_final))
+                        elif method[0] == 'destroy' and len(arguments) == 1:
+                            return(self.do_destroy(str_final))
+                        elif method[0] == 'update' and len(arguments) == 3:
+                            return(self.do_update(str_final))
+                        else:
+                            return(cmd.Cmd.default(self, inp))
+        return(cmd.Cmd.default(self, inp))
 
 if __name__ == '__main__':
     '''main'''
