@@ -24,6 +24,8 @@ class HBNBCommand(cmd.Cmd):
     model_list = ['BaseModel', 'User', 'State',
                   'City', 'Amenity', 'Place', 'Review']
 
+    commands_list = ['all', 'show', 'create', 'destroy', 'udate']
+
     def do_quit(self, inp):
         '''do_quit - Quit command to exit the program'''
         return True
@@ -163,6 +165,27 @@ class HBNBCommand(cmd.Cmd):
                             new_instance.save()
                         else:
                             print("** no instance found **")
+
+    def default(self, inp):
+        '''default - process other type of input'''
+        tokens = inp.split('.')
+        method = tokens[1].split('(')
+        arguments = method[1].split(',')
+        for i in range(len(arguments)):
+            arguments[i] = arguments[i].replace("\"", "")
+            arguments[i] = arguments[i].replace(")", "")
+            arguments[i] = arguments[i].replace(" ", "")
+        final_list = [tokens[0]] + arguments
+        str_final = ' '.join(str(e) for e in final_list)
+        if method[0] == 'all':
+            return(self.do_all(str_final))
+        if method[0] == 'show':
+            return(self.do_show(str_final))
+        if method[0] == 'destroy':
+            return(self.do_destroy(str_final))
+        if method[0] == 'update':
+            return(self.do_update(str_final))
+
 if __name__ == '__main__':
     '''main'''
     HBNBCommand().cmdloop()
