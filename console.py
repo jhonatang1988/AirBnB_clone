@@ -25,8 +25,6 @@ class HBNBCommand(cmd.Cmd):
     model_list = ['BaseModel', 'User', 'State',
                   'City', 'Amenity', 'Place', 'Review']
 
-    commands_list = ['all', 'show', 'create', 'destroy', 'udate']
-
     def do_quit(self, inp):
         '''do_quit - Quit command to exit the program'''
         return True
@@ -180,6 +178,23 @@ class HBNBCommand(cmd.Cmd):
                 else:
                     print("** no instance found **")
 
+    def do_count(self, inp):
+        '''do_count - return the number of instances'''
+        if len(inp) > 0:
+            a_list = inp.split()
+            if a_list[0] in self.model_list and len(a_list) == 1:
+                count = 0
+                if os.path.isfile(self.__file_path):
+                    with open(self.__file_path, encoding='utf-8',
+                              mode='r') as f:
+                        a_string = f.read()
+                        if a_string:
+                            a_dict = json.loads(a_string)
+                            for key, value in a_dict.items():
+                                if a_list[0] in key:
+                                    count += 1
+                print(count)
+
     def default(self, inp):
         '''default - process other type of input'''
         tokens = inp.split('.')
@@ -193,14 +208,34 @@ class HBNBCommand(cmd.Cmd):
                         arguments[i] = arguments[i].replace(")", "")
                         final_list = [tokens[0]] + arguments
                         str_final = ' '.join(str(e) for e in final_list)
+                        str_final = str_final.replace(")", "")
                         if method[0] == 'all' and len(arguments) == 1:
                             return(self.do_all(str_final))
                         elif method[0] == 'show' and len(arguments) == 1:
                             return(self.do_show(str_final))
                         elif method[0] == 'destroy' and len(arguments) == 1:
                             return(self.do_destroy(str_final))
-                        elif method[0] == 'update' and len(arguments) == 3:
-                            return(self.do_update(str_final))
+                        elif method[0] == 'update':
+                            if "{" in inp:
+                                update_list = [tokens[0]]
+                                str_bef_dict = inp.split(',', 1)[-1]
+                                str_bef_dict = str_bef_dict.replace(")", "")
+                                str_bef_dict = str_bef_dict.replace("'", "\"")
+                                dict1 = eval(str_bef_dict)
+                                if type(dict1) is dict:
+                                    for key, value in dict1.items():
+                                        update_list = [tokens[0]]
+                                        update_list.append(arguments[0])
+                                        update_list.append(key)
+                                        update_list.append(value)
+                                        str_update = ' '.join(
+                                            str(e) for e in update_list)
+                                        self.do_update(str_update)
+                                return
+                            else:
+                                return(self.do_update(str_final))
+                        elif method[0] == 'count' and len(arguments) == 1:
+                            return(self.do_count(str_final))
                         else:
                             return(cmd.Cmd.default(self, inp))
         return(cmd.Cmd.default(self, inp))
