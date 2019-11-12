@@ -178,14 +178,16 @@ class HBNBCommand(cmd.Cmd):
             arguments[i] = arguments[i].replace(" ", "")
         final_list = [tokens[0]] + arguments
         str_final = ' '.join(str(e) for e in final_list)
-        if method[0] == 'all':
+        if method[0] == 'all' and len(arguments) == 0:
             return(self.do_all(str_final))
-        if method[0] == 'show':
+        elif method[0] == 'show' and len(arguments) == 1:
             return(self.do_show(str_final))
-        if method[0] == 'destroy':
+        elif method[0] == 'destroy' and len(arguments) == 1:
             return(self.do_destroy(str_final))
-        if method[0] == 'update':
+        elif method[0] == 'update' and len(arguments) == 3:
             return(self.do_update(str_final))
+        else:
+            return(cmd.Cmd.default(self, inp))
 
 if __name__ == '__main__':
     '''main'''
