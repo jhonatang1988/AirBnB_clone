@@ -3,6 +3,12 @@
 
 import json
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.amenity import Amenity
+from models.place import Place
+from models.review import Review
 import os.path
 
 
@@ -16,7 +22,7 @@ class FileStorage(BaseModel):
 
     def new(self, obj):
         id1 = getattr(obj, 'id')
-        self.__objects['BaseModel.' + id1] = obj
+        self.__objects[obj.to_dict()['__class__'] + '.' + id1] = obj
 
     def save(self):
         dict2 = {}
@@ -33,4 +39,4 @@ class FileStorage(BaseModel):
                 if json_string:
                     dict1 = json.loads(json_string)
                     for key, value in dict1.items():
-                        self.__objects[key] = BaseModel(**value)
+                        self.__objects[key] = eval(value['__class__'])(**value)
