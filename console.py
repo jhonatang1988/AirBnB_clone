@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-'''HBNBCommand - console for the airbnb clone'''
+'''
+HBNBCommand - console for the airbnb clone
+'''
 
 import cmd
 from models.base_model import BaseModel
@@ -22,13 +24,13 @@ class HBNBCommand(cmd.Cmd):
                   'City', 'Amenity', 'Place', 'Review']
 
     def do_quit(self, inp):
-        '''Quit command to exit the program'''
+        '''do_quit - Quit command to exit the program'''
         return True
 
     do_EOF = do_quit
 
     def do_create(self, inp):
-        '''create a new instance of a model'''
+        '''do_create - create a new instance of a model'''
         model_list = ['BaseModel', 'User', 'State',
                       'City', 'Amenity', 'Place', 'Review']
         if len(inp) == 0:
@@ -41,7 +43,7 @@ class HBNBCommand(cmd.Cmd):
             print("** class doesn't exist **")
 
     def do_show(self, inp):
-        '''show prints the string representation of an instance'''
+        '''do_show - show prints the string representation of an instance'''
         if len(inp) == 0:
             print("** class name missing **")
         else:
@@ -67,7 +69,7 @@ class HBNBCommand(cmd.Cmd):
                             print("** no instance found **")
 
     def do_destroy(self, inp):
-        '''destroy an instance'''
+        '''do_destroy - destroy an instance'''
         if len(inp) == 0:
             print("** class name missing **")
         else:
@@ -91,7 +93,7 @@ class HBNBCommand(cmd.Cmd):
                         f.write(json.dumps(a_dict))
 
     def do_all(self, inp):
-        '''show all instances of a class or all'''
+        '''do_all - show all instances of a class or all'''
         flag = 0
         flag2 = 0
         if len(inp) == 0:
@@ -125,7 +127,7 @@ class HBNBCommand(cmd.Cmd):
                         print(instances)
 
     def do_update(self, inp):
-        '''update an instance'''
+        '''do_update - update an instance'''
         if len(inp) == 0:
             print("** class name missing **")
         else:
