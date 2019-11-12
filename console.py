@@ -15,14 +15,17 @@ from models.review import Review
 import models
 import os.path
 import json
+import shlex
 
 
 class HBNBCommand(cmd.Cmd):
     '''HBNBCommand - console for the airbnb clone'''
-    prompt = '(hbnb)'
+    prompt = '(hbnb) '
     __file_path = 'file.json'
     model_list = ['BaseModel', 'User', 'State',
                   'City', 'Amenity', 'Place', 'Review']
+
+    commands_list = ['all', 'show', 'create', 'destroy', 'udate']
 
     def do_quit(self, inp):
         '''do_quit - Quit command to exit the program'''
@@ -66,6 +69,8 @@ class HBNBCommand(cmd.Cmd):
                         a_string = f.read()
                         if a_string:
                             a_dict = json.loads(a_string)
+                            a_list[1] = a_list[1].replace("'", "")
+                            a_list[1] = a_list[1].replace("\"", "")
                             if a_list[0] + '.' + a_list[1] in a_dict:
                                 print(eval(a_list[0])
                                       (**(a_dict[a_list[0] +
@@ -91,6 +96,8 @@ class HBNBCommand(cmd.Cmd):
                               encoding='utf-8', mode='r') as f:
                         a_string = f.read()
                         a_dict = json.loads(a_string)
+                        a_list[1] = a_list[1].replace("'", "")
+                        a_list[1] = a_list[1].replace("\"", "")
                         if a_list[0] + '.' + a_list[1] in a_dict:
                             del a_dict[a_list[0] + '.' + a_list[1]]
                         else:
@@ -132,13 +139,16 @@ class HBNBCommand(cmd.Cmd):
                                 instances.append(eval_class2.__str__
                                                  (eval_class2(**(value))))
                         print(instances)
+            else:
+                list_vacia = []
+                print(list_vacia)
 
     def do_update(self, inp):
         '''do_update - update an instance'''
         if len(inp) == 0:
             print("** class name missing **")
         else:
-            a_list = inp.split()
+            a_list = shlex.split(inp)
             if a_list[0] not in self.model_list:
                 print("** class doesn't exist **")
             elif len(a_list) == 1:
@@ -163,6 +173,32 @@ class HBNBCommand(cmd.Cmd):
                             new_instance.save()
                         else:
                             print("** no instance found **")
+
+    def default(self, inp):
+        '''default - process other type of input'''
+        tokens = inp.split('.')
+        if tokens is not None and len(tokens) > 1:
+            method = tokens[1].split('(')
+            if method is not None:
+                arguments = method[1].split(',')
+                if arguments is not None:
+                    for i in range(len(arguments)):
+                        arguments[i] = arguments[i].replace("'", "")
+                        arguments[i] = arguments[i].replace(")", "")
+                        final_list = [tokens[0]] + arguments
+                        str_final = ' '.join(str(e) for e in final_list)
+                        if method[0] == 'all' and len(arguments) == 1:
+                            return(self.do_all(str_final))
+                        elif method[0] == 'show' and len(arguments) == 1:
+                            return(self.do_show(str_final))
+                        elif method[0] == 'destroy' and len(arguments) == 1:
+                            return(self.do_destroy(str_final))
+                        elif method[0] == 'update' and len(arguments) == 3:
+                            return(self.do_update(str_final))
+                        else:
+                            return(cmd.Cmd.default(self, inp))
+        return(cmd.Cmd.default(self, inp))
+
 if __name__ == '__main__':
     '''main'''
     HBNBCommand().cmdloop()
