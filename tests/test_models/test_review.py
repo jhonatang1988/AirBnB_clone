@@ -1,9 +1,9 @@
 #!/usr/bin/python3
 '''
-tests for user model
+tests for review model
 '''
 
-from models.user import User
+from models.review import Review
 from datetime import datetime
 import unittest
 from models.base_model import BaseModel
@@ -11,12 +11,12 @@ from models.base_model import BaseModel
 
 class TestUser(unittest.TestCase):
     ''' TestUser Class - to test cases'''
-    my_model = User()
-    my_model.name = "jhonatan"
+    my_model = Review()
+    my_model.name = "laResena"
 
     def test_isinstance(self):
         '''test for is instance'''
-        self.assertIsInstance(self.my_model, User)
+        self.assertIsInstance(self.my_model, Review)
         self.assertIsInstance(self.my_model, BaseModel)
         self.assertIsInstance(
             self.my_model.created_at, datetime)
@@ -25,28 +25,30 @@ class TestUser(unittest.TestCase):
 
     def test_attr_types(self):
         '''test for types'''
-        self.assertEqual(type(self.my_model.email), str)
-        self.assertEqual(type(self.my_model.password), str)
-        self.assertEqual(type(self.my_model.first_name), str)
-        self.assertEqual(type(self.my_model.last_name), str)
+        self.assertEqual(type(self.my_model.place_id), str)
+        self.assertEqual(type(self.my_model.user_id), str)
+        self.assertEqual(type(self.my_model.text), str)
         self.assertEqual(type(self.my_model.id), str)
         self.assertEqual(type(self.my_model.updated_at), datetime)
         self.assertEqual(type(self.my_model.created_at), datetime)
 
     def test_has_attr(self):
         '''test for attributes'''
-        self.assertEqual(hasattr(self.my_model, 'email'), True)
-        self.assertEqual(hasattr(self.my_model, 'password'), True)
-        self.assertEqual(hasattr(self.my_model, 'first_name'), True)
-        self.assertEqual(hasattr(self.my_model, 'last_name'), True)
+        self.assertEqual(hasattr(self.my_model, 'email'), False)
+        self.assertEqual(hasattr(self.my_model, 'password'), False)
+        self.assertEqual(hasattr(self.my_model, 'first_name'), False)
+        self.assertEqual(hasattr(self.my_model, 'last_name'), False)
         self.assertEqual(hasattr(self.my_model, 'id'), True)
         self.assertEqual(hasattr(self.my_model, 'updated_at'), True)
         self.assertEqual(hasattr(self.my_model, 'created_at'), True)
         self.assertEqual(hasattr(self.my_model, '__class__'), True)
+        self.assertEqual(hasattr(self.my_model, 'place_id'), True)
+        self.assertEqual(hasattr(self.my_model, 'user_id'), True)
+        self.assertEqual(hasattr(self.my_model, 'text'), True)
 
     def test_doc(self):
         '''test for doc'''
-        self.assertIsNotNone(User.__doc__)
+        self.assertIsNotNone(Review.__doc__)
 
 if __name__ == '__main__':
     '''for import'''
