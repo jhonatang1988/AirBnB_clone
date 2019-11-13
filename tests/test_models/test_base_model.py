@@ -20,9 +20,12 @@ class TestBaseModel(unittest.TestCase):
 
     def teardown(self):
             """End tests and del instances"""
-            del my_model
-            del my_model2
-            os.remove("file.json")
+            del self.my_model
+            del self.my_model2
+            try:
+                os.remove("file.json")
+            except:
+                pass
 
     def test_instantiation(self):
         '''Unittest module for Base Model Class'''
