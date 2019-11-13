@@ -3,6 +3,7 @@
 tests for state model
 '''
 
+
 from models.state import State
 import unittest
 
