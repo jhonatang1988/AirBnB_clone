@@ -50,6 +50,7 @@ class TestBaseModel(unittest.TestCase):
         '''Test to dictionary'''
         d_format = "%Y-%m-%dT%H:%M:%S.%f"
         dict1 = self.my_model.to_dict()
+        self.assertEqual(self.my_model.__class__.__name__, 'BaseModel')
         self.assertEqual(dict1['updated_at'],
                          self.my_model.updated_at.strftime(d_format))
         self.assertEqual(dict1['created_at'],
@@ -67,6 +68,6 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(new.id, self.my_model.id)
         self.assertEqual(new.updated_at, self.my_model.updated_at)
         self.assertEqual(new.created_at, self.my_model.created_at)
-
+        self.assertNotEqual(new, self.my_model)
 if __name__ == '__main__':
     unittest.main()
