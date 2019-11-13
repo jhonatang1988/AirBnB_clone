@@ -27,7 +27,7 @@ $ echo "help" | ./console.py
 Documented commands (type help <topic>):
 ========================================
 EOF  all  count  create  destroy  help  quit  show  update
-'''
+```
 
 ## Interactive mode example
 ```
@@ -46,7 +46,7 @@ $
 ## Models
 
 File                     | Description                                                  | Attributes
------------------------- | -------------------------------------------------------------
+------------------------ | -------------------------------------------------------------|
 base_model.py            | BaseModel class for all the other classes                    | id, created_at, updated_at
 user.py                  | User class for future user information                       | email, password, first_name, last_name
 amenity.py               | Amenity class for future amenity information                 | name
