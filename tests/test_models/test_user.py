@@ -8,6 +8,7 @@ from datetime import datetime
 import unittest
 from models.base_model import BaseModel
 
+
 class TestUser(unittest.TestCase):
     ''' TestUser Class - to test cases'''
     my_model = User()
@@ -49,4 +50,5 @@ class TestUser(unittest.TestCase):
         self.assertIsNotNone(User.__doc__)
 
 if __name__ == '__main__':
+    '''for import'''
     unittest.main()
