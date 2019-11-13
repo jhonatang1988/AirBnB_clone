@@ -52,7 +52,9 @@ user.py                  | User class for future user information               
 amenity.py               | Amenity class for future amenity information                 | name                                               |
 city.py                  | City class for future location information                   | state_id, name                                     |
 state.py                 | State class for future location information                  | name                                               |
-place.py                 | Place class for future accomodation information              | city_id, user_id, name, description, number_rooms  |
+place.py                 | Place class for future accomodation information              | city_id, user_id, name, description, number_rooms, |
+place.py                 | Place class for future accomodation information              | number_bathrooms,max_guest, price_by_night,        |
+place.py                 | Place class for future accomodation information              | latitude, longitude, amenity_ids.                  | 
 review.py                | Review class for future user/host review information         | place_id, user_id, text                            |
 
 
@@ -69,5 +71,5 @@ All the code is tested with the unittest module.
 
 ## Authors
 
-Jhonatah Galindo - jhonatan1988@gmail.com
-Karen Herrera - karenahv@gmail.com
+- Jhonatah Galindo - jhonatan1988@gmail.com
+- Karen Herrera - karenahv@gmail.com
