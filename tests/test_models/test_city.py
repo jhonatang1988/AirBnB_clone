@@ -6,6 +6,7 @@ tests for city model
 from models.city import City
 import unittest
 
+
 class TestState(unittest.TestCase):
     ''' TestUser Class - to test cases'''
     my_model = City()
