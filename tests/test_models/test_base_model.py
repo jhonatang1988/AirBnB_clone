@@ -49,4 +49,4 @@ class TestBaseModel(unittest.TestCase):
     def test_to_dict(self):
         '''Test to dictionary'''
         d_format = %Y-%m-%dT%H:%M:%S.%f
-        
+        model
