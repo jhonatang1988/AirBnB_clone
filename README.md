@@ -71,5 +71,5 @@ All the code is tested with the unittest module.
 
 ## Authors
 
-- Jhonatah Galindo - jhonatan1988@gmail.com
+- Jhonatan Galindo - jhonatan1988@gmail.com
 - Karen Herrera - karenahv@gmail.com
