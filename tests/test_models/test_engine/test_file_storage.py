@@ -79,5 +79,13 @@ class TestFileStorage(unittest.TestCase):
         l2 = len(s.all())
         self.assertEqual(l1, l2 - 1)
 
+    def test_checking_docstring_FileStorage(self):
+        """ Test if all docstring"""
+        self.assertIsNotNone(FileStorage.__doc__)
+        self.assertIsNotNone(FileStorage.all.__doc__)
+        self.assertIsNotNone(FileStorage.new.__doc__)
+        self.assertIsNotNone(FileStorage.save.__doc__)
+        self.assertIsNotNone(FileStorage.reload.__doc__)
+
 if __name__ == '__main__':
     unittest.main()
