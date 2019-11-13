@@ -25,25 +25,25 @@ class TestUser(unittest.TestCase):
 
     def test_attr_types(self):
         '''test for types'''
-        self.assertTrue(type(self.my_model.email), str)
-        self.assertTrue(type(self.my_model.password), str)
-        self.assertTrue(type(self.my_model.first_name), str)
-        self.assertTrue(type(self.my_model.last_name), str)
-        self.assertTrue(type(self.my_model.id), str)
-        self.assertTrue(type(self.my_model.updated_at), datetime)
-        self.assertTrue(type(self.my_model.created_at), datetime)
-        self.assertTrue(type(self.my_model.__class__), str)
+        self.assertEqual(type(self.my_model.email), str)
+        self.assertEqual(type(self.my_model.password), str)
+        self.assertEqual(type(self.my_model.first_name), str)
+        self.assertEqual(type(self.my_model.last_name), str)
+        self.assertEqual(type(self.my_model.id), str)
+        self.assertEqual(type(self.my_model.updated_at), datetime)
+        self.assertEqual(type(self.my_model.created_at), datetime)
+        self.assertEqual(type(self.my_model.__class__), str)
 
     def test_has_attr(self):
         '''test for attributes'''
-        self.assertTrue(hasattr(self.my_model, 'email'))
-        self.assertTrue(hasattr(self.my_model, 'password'))
-        self.assertTrue(hasattr(self.my_model, 'first_name'))
-        self.assertTrue(hasattr(self.my_model, 'last_name'))
-        self.assertTrue(hasattr(self.my_model, 'id'))
-        self.assertTrue(hasattr(self.my_model, 'updated_at'))
-        self.assertTrue(hasattr(self.my_model, 'created_at'))
-        self.assertTrue(hasattr(self.my_model, '__class__'))
+        self.assertEqual(hasattr(self.my_model, 'email'), True)
+        self.assertEqual(hasattr(self.my_model, 'password'))
+        self.assertEqual(hasattr(self.my_model, 'first_name'))
+        self.assertEqual(hasattr(self.my_model, 'last_name'))
+        self.assertEqual(hasattr(self.my_model, 'id'))
+        self.assertEqual(hasattr(self.my_model, 'updated_at'))
+        self.assertEqual(hasattr(self.my_model, 'created_at'))
+        self.assertEqual(hasattr(self.my_model, '__class__'))
 
     def test_doc(self):
         '''test for doc'''
