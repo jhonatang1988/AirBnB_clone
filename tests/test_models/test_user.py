@@ -36,14 +36,14 @@ class TestUser(unittest.TestCase):
 
     def test_has_attr(self):
         '''test for attributes'''
-        self.assertEqual(hasattr(self.my_model, 'email'), True)
-        self.assertEqual(hasattr(self.my_model, 'password'), True)
-        self.assertEqual(hasattr(self.my_model, 'first_name'), True)
-        self.assertEqual(hasattr(self.my_model, 'last_name'), True)
-        self.assertEqual(hasattr(self.my_model, 'id'), True)
-        self.assertEqual(hasattr(self.my_model, 'updated_at'), True)
-        self.assertEqual(hasattr(self.my_model, 'created_at'), True)
-        self.assertEqual(hasattr(self.my_model, '__class__'), True)
+        self.assertTrue(hasattr(self.my_model, 'email'))
+        self.assertTrue(hasattr(self.my_model, 'password'))
+        self.assertTrue(hasattr(self.my_model, 'first_name'))
+        self.assertTrue(hasattr(self.my_model, 'last_name'))
+        self.assertTrue(hasattr(self.my_model, 'id'))
+        self.assertTrue(hasattr(self.my_model, 'updated_at'))
+        self.assertTrue(hasattr(self.my_model, 'created_at'))
+        self.assertTrue(hasattr(self.my_model, '__class__'))
 
     def test_doc(self):
         '''test for doc'''
