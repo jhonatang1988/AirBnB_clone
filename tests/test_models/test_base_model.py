@@ -72,5 +72,13 @@ class TestBaseModel(unittest.TestCase):
         self.assertEqual(new.updated_at, self.my_model.updated_at)
         self.assertEqual(new.created_at, self.my_model.created_at)
         self.assertNotEqual(new, self.my_model)
+
+    def test_checking_docstring_BaseModel(self):
+        """ Test if all docstring"""
+        self.assertIsNotNone(BaseModel.__doc__)
+        self.assertIsNotNone(BaseModel.save.__doc__)
+        self.assertIsNotNone(BaseModel.to_dict.__doc__)
+        self.assertIsNotNone(BaseModel.__str__.__doc__)
+
 if __name__ == '__main__':
     unittest.main()
