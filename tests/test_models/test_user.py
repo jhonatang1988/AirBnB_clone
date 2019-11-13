@@ -36,7 +36,7 @@ class TestUser(unittest.TestCase):
 
     def test_has_attr(self):
         '''test for attributes'''
-        self.assertEqual(hasattr(self.my_model, 'email'), True)
+        self.assertEqual(hasattr(self.my_model, 'email'))
         self.assertEqual(hasattr(self.my_model, 'password'))
         self.assertEqual(hasattr(self.my_model, 'first_name'))
         self.assertEqual(hasattr(self.my_model, 'last_name'))

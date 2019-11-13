@@ -25,11 +25,10 @@ class TestState(unittest.TestCase):
 
     def test_attr_types(self):
         '''test for types'''
-        self.assertEqual(type(self.my_model.name) is str, True)
-        self.assertEqual(type(self.my_model.id) is str, True)
-        self.assertEqual(type(self.my_model.updated_at) is datetime, True)
-        self.assertEqual(type(self.my_model.created_at) is datetime, True)
-        self.assertEqual(type(self.my_model.__class__) is str, False)
+        self.assertEqual(type(self.my_model.name), str)
+        self.assertEqual(type(self.my_model.id), str)
+        self.assertEqual(type(self.my_model.updated_at), datetime)
+        self.assertEqual(type(self.my_model.created_at), datetime)
 
     def test_has_attr(self):
         '''test for attributes'''
